@@ -1,7 +1,381 @@
-<html>
-  <head><title>Study league</title>
-  </head>
-  <body>
-    <h1>Welcome to Study league its under develoment will be soon live for you.</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10 Study Hub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            background: white;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #f0f0f0;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .chapters-list {
+            display: none;
+            list-style: none;
+        }
+
+        .chapters-list.active {
+            display: block;
+        }
+
+        .chapter-item {
+            padding: 10px 15px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #34495e;
+            transition: background 0.3s ease;
+        }
+
+        .chapter-item:hover {
+            background: #e9ecef;
+        }
+
+        /* Chatbot styles */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: #3498db;
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        /* Footer styles */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+                padding: 20px 10px;
+            }
+
+            .chatbot-window {
+                width: 300px;
+                height: 400px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .footer-links a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Class 10 Study Hub</h1>
+        <p class="subtitle">Your complete guide to CBSE curriculum</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#blog">Study Blog</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="subjects-grid" x-data="{ activeSubject: null }">
+            <!-- Science -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'science') ? null : 'science'">
+                <h2 class="subject-title">Science</h2>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'science' }">
+                    <li class="chapter-item"><a href="science/chapter1.html">Chemical Reactions and Equations</a></li>
+                    <li class="chapter-item"><a href="science/chapter2.html">Acids, Bases and Salts</a></li>
+                    <li class="chapter-item"><a href="science/chapter3.html">Metals and Non-metals</a></li>
+                    <li class="chapter-item"><a href="science/chapter4.html">Life Processes</a></li>
+                    <li class="chapter-item"><a href="science/chapter5.html">Control and Coordination</a></li>
+                </ul>
+            </div>
+
+            <!-- Mathematics -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'maths') ? null : 'maths'">
+                <h2 class="subject-title">Mathematics</h2>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'maths' }">
+                    <li class="chapter-item"><a href="maths/chapter1.html">Real Numbers</a></li>
+                    <li class="chapter-item"><a href="maths/chapter2.html">Polynomials</a></li>
+                    <li class="chapter-item"><a href="maths/chapter3.html">Pair of Linear Equations</a></li>
+                    <li class="chapter-item"><a href="maths/chapter4.html">Triangles</a></li>
+                    <li class="chapter-item"><a href="maths/chapter5.html">Circles</a></li>
+                </ul>
+            </div>
+
+            <!-- English -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'english') ? null : 'english'">
+                <h2 class="subject-title">English</h2>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'english' }">
+                    <li class="chapter-item"><a href="english/chapter1.html">First Flight - Prose</a></li>
+                    <li class="chapter-item"><a href="english/chapter2.html">First Flight - Poetry</a></li>
+                    <li class="chapter-item"><a href="english/chapter3.html">Footprints Without Feet</a></li>
+                    <li class="chapter-item"><a href="english/chapter4.html">Grammar and Writing</a></li>
+                    <li class="chapter-item"><a href="english/chapter5.html">Literature Reader</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Science -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'social') ? null : 'social'">
+                <h2 class="subject-title">Social Science</h2>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'social' }">
+                    <li class="chapter-item"><a href="social/chapter1.html">Development</a></li>
+                    <li class="chapter-item"><a href="social/chapter2.html">Nationalism in India</a></li>
+                    <li class="chapter-item"><a href="social/chapter3.html">Resources and Development</a></li>
+                    <li class="chapter-item"><a href="social/chapter4.html">Power Sharing</a></li>
+                    <li class="chapter-item"><a href="social/chapter5.html">Consumer Rights</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-button" onclick="toggleChat()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </div>
+
+    <div class="chatbot-window" id="chatWindow">
+        <div class="chat-header">
+            <h3>Study Assistant</h3>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be inserted here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask your doubt..." id="chatInput" onkeypress="handleChatInput(event)">
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 2025 Class 10 Study Hub. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Use</a>
+                <a href="/contact">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Chatbot functionality
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('active');
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+                
+                if (message) {
+                    addMessage('user', message);
+                    // Here you would normally make an API call to Google's Gemini
+                    // For demonstration, we'll simulate a response
+                    setTimeout(() => {
+                        processWithGemini(message);
+                    }, 1000);
+                    
+                    input.value = '';
+                }
+            }
+        }
+
+        function addMessage(sender, text) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.style.marginBottom = '10px';
+            messageDiv.style.padding = '8px 12px';
+            messageDiv.style.borderRadius = '15px';
+            messageDiv.style.maxWidth = '80%';
+            
+            if (sender === 'user') {
+                messageDiv.style.marginLeft = 'auto';
+                messageDiv.style.background = '#3498db';
+                messageDiv.style.color = 'white';
+            } else {
+                messageDiv.style.background = '#f0f0f0';
+                messageDiv.style.color = 'black';
+            }
+            
+            messageDiv.textContent = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function processWithGemini(message) {
+            // This is where you would integrate with the Gemini API
+            // For now, we'll simulate a response
+            const responses = {
+                "hello": "Hi! How can I help you with your studies today?",
+                "help": "I can help you with any subject-related questions. Just ask!",
+                default: "I understand your question about '" + message + "'. Let me help you with that. What specific aspect would you like to know more about?"
+            };
+
+            const response = responses[message.toLowerCase()] || responses.default;
+            addMessage('bot', response);
+        }
+    </script>
+</body>
 </html>
