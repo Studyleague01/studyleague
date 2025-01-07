@@ -82,6 +82,23 @@
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
         }
 
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .subject-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .subject-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+
         .chapters-list {
             display: none;
             list-style: none;
@@ -102,6 +119,12 @@
 
         .chapter-item:hover {
             background: #e9ecef;
+        }
+
+        .chapter-item a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         /* Chatbot styles */
@@ -149,12 +172,34 @@
             background: #3498db;
             color: white;
             border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .chat-messages {
             flex-grow: 1;
             padding: 15px;
             overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: #3498db;
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #f0f0f0;
+            color: black;
         }
 
         .chat-input {
@@ -170,7 +215,17 @@
             outline: none;
         }
 
-        /* Footer styles */
+        .typing-indicator {
+            padding: 8px 12px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+        }
+
         footer {
             background: #2c3e50;
             color: white;
@@ -235,51 +290,83 @@
 
     <div class="container">
         <div class="subjects-grid" x-data="{ activeSubject: null }">
-            <!-- Science -->
-            <div class="subject-card" @click="activeSubject = (activeSubject === 'science') ? null : 'science'">
-                <h2 class="subject-title">Science</h2>
-                <ul class="chapters-list" :class="{ 'active': activeSubject === 'science' }">
-                    <li class="chapter-item"><a href="science/chapter1.html">Chemical Reactions and Equations</a></li>
-                    <li class="chapter-item"><a href="science/chapter2.html">Acids, Bases and Salts</a></li>
-                    <li class="chapter-item"><a href="science/chapter3.html">Metals and Non-metals</a></li>
-                    <li class="chapter-item"><a href="science/chapter4.html">Life Processes</a></li>
-                    <li class="chapter-item"><a href="science/chapter5.html">Control and Coordination</a></li>
+            <!-- Physics -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'physics') ? null : 'physics'">
+                <div class="subject-header">
+                    <svg class="subject-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22v-8m0-4V2m-8 8h16" />
+                    </svg>
+                    <h2 class="subject-title">Physics</h2>
+                </div>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'physics' }">
+                    <li class="chapter-item"><a href="physics/chapter1.html">Light - Reflection and Refraction</a></li>
+                    <li class="chapter-item"><a href="physics/chapter2.html">Electricity</a></li>
+                    <li class="chapter-item"><a href="physics/chapter3.html">Magnetic Effects of Electric Current</a></li>
+                    <li class="chapter-item"><a href="physics/chapter4.html">Sources of Energy</a></li>
+                </ul>
+            </div>
+
+            <!-- Chemistry -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'chemistry') ? null : 'chemistry'">
+                <div class="subject-header">
+                    <svg class="subject-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 3v15M15 3v15M4 19h16M4 15h16" />
+                    </svg>
+                    <h2 class="subject-title">Chemistry</h2>
+                </div>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'chemistry' }">
+                    <li class="chapter-item"><a href="chemistry/chapter1.html">Chemical Reactions and Equations</a></li>
+                    <li class="chapter-item"><a href="chemistry/chapter2.html">Acids, Bases and Salts</a></li>
+                    <li class="chapter-item"><a href="chemistry/chapter3.html">Metals and Non-metals</a></li>
+                    <li class="chapter-item"><a href="chemistry/chapter4.html">Carbon and its Compounds</a></li>
+                </ul>
+            </div>
+
+            <!-- Biology -->
+            <div class="subject-card" @click="activeSubject = (activeSubject === 'biology') ? null : 'biology'">
+                <div class="subject-header">
+                    <svg class="subject-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3v18M3 12h18M4.5 4.5l15 15M19.5 4.5l-15 15" />
+                    </svg>
+                    <h2 class="subject-title">Biology</h2>
+                </div>
+                <ul class="chapters-list" :class="{ 'active': activeSubject === 'biology' }">
+                    <li class="chapter-item"><a href="biology/chapter1.html">Life Processes</a></li>
+                    <li class="chapter-item"><a href="biology/chapter2.html">Control and Coordination</a></li>
+                    <li class="chapter-item"><a href="biology/chapter3.html">How do Organisms Reproduce?</a></li>
+                    <li class="chapter-item"><a href="biology/chapter4.html">Heredity and Evolution</a></li>
                 </ul>
             </div>
 
             <!-- Mathematics -->
             <div class="subject-card" @click="activeSubject = (activeSubject === 'maths') ? null : 'maths'">
-                <h2 class="subject-title">Mathematics</h2>
+                <div class="subject-header">
+                    <svg class="subject-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 7l-12 12L1 9" />
+                    </svg>
+                    <h2 class="subject-title">Mathematics</h2>
+                </div>
                 <ul class="chapters-list" :class="{ 'active': activeSubject === 'maths' }">
                     <li class="chapter-item"><a href="maths/chapter1.html">Real Numbers</a></li>
                     <li class="chapter-item"><a href="maths/chapter2.html">Polynomials</a></li>
                     <li class="chapter-item"><a href="maths/chapter3.html">Pair of Linear Equations</a></li>
                     <li class="chapter-item"><a href="maths/chapter4.html">Triangles</a></li>
-                    <li class="chapter-item"><a href="maths/chapter5.html">Circles</a></li>
                 </ul>
             </div>
 
             <!-- English -->
             <div class="subject-card" @click="activeSubject = (activeSubject === 'english') ? null : 'english'">
-                <h2 class="subject-title">English</h2>
+                <div class="subject-header">
+                    <svg class="subject-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 01-2.5-2.5z" />
+                    </svg>
+                    <h2 class="subject-title">English</h2>
+                </div>
                 <ul class="chapters-list" :class="{ 'active': activeSubject === 'english' }">
                     <li class="chapter-item"><a href="english/chapter1.html">First Flight - Prose</a></li>
                     <li class="chapter-item"><a href="english/chapter2.html">First Flight - Poetry</a></li>
                     <li class="chapter-item"><a href="english/chapter3.html">Footprints Without Feet</a></li>
                     <li class="chapter-item"><a href="english/chapter4.html">Grammar and Writing</a></li>
-                    <li class="chapter-item"><a href="english/chapter5.html">Literature Reader</a></li>
-                </ul>
-            </div>
-
-            <!-- Social Science -->
-            <div class="subject-card" @click="activeSubject = (activeSubject === 'social') ? null : 'social'">
-                <h2 class="subject-title">Social Science</h2>
-                <ul class="chapters-list" :class="{ 'active': activeSubject === 'social' }">
-                    <li class="chapter-item"><a href="social/chapter1.html">Development</a></li>
-                    <li class="chapter-item"><a href="social/chapter2.html">Nationalism in India</a></li>
-                    <li class="chapter-item"><a href="social/chapter3.html">Resources and Development</a></li>
-                    <li class="chapter-item"><a href="social/chapter4.html">Power Sharing</a></li>
-                    <li class="chapter-item"><a href="social/chapter5.html">Consumer Rights</a></li>
                 </ul>
             </div>
         </div>
@@ -295,9 +382,13 @@
     <div class="chatbot-window" id="chatWindow">
         <div class="chat-header">
             <h3>Study Assistant</h3>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; cursor: pointer;">×</button>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <!-- Messages will be inserted here -->
+            <!-- Initial greeting message -->
+            <div class="chat-message bot-message<div class="chat-message bot-message">
+                Hi! I'm your study assistant. How can I help you with your studies today?
+            </div>
         </div>
         <div class="chat-input">
             <input type="text" placeholder="Ask your doubt..." id="chatInput" onkeypress="handleChatInput(event)">
@@ -318,64 +409,107 @@
     </footer>
 
     <script>
+        // Gemini API configuration
+        const API_KEY = 'AIzaSyCdoxyWjwCnQ5lEfpbXUeJP0CapL76yFyM';
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+
         // Chatbot functionality
         function toggleChat() {
             const chatWindow = document.getElementById('chatWindow');
             chatWindow.classList.toggle('active');
         }
 
-        function handleChatInput(event) {
+        async function handleChatInput(event) {
             if (event.key === 'Enter') {
                 const input = document.getElementById('chatInput');
                 const message = input.value.trim();
                 
                 if (message) {
+                    // Display user message
                     addMessage('user', message);
-                    // Here you would normally make an API call to Google's Gemini
-                    // For demonstration, we'll simulate a response
-                    setTimeout(() => {
-                        processWithGemini(message);
-                    }, 1000);
-                    
                     input.value = '';
+
+                    // Show typing indicator
+                    showTypingIndicator();
+
+                    try {
+                        // Call Gemini API
+                        const response = await callGeminiAPI(message);
+                        hideTypingIndicator();
+                        addMessage('bot', response);
+                    } catch (error) {
+                        hideTypingIndicator();
+                        addMessage('bot', 'Sorry, I encountered an error. Please try again.');
+                        console.error('Error:', error);
+                    }
                 }
+            }
+        }
+
+        async function callGeminiAPI(message) {
+            const payload = {
+                contents: [{
+                    parts: [{
+                        text: `You are a helpful study assistant for CBSE Class 10 students. 
+                              Answer the following question in a helpful and educational way: ${message}`
+                    }]
+                }]
+            };
+
+            try {
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error('API Error:', error);
+                return "I'm having trouble connecting to my knowledge base. Please try again in a moment.";
             }
         }
 
         function addMessage(sender, text) {
             const messages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.style.marginBottom = '10px';
-            messageDiv.style.padding = '8px 12px';
-            messageDiv.style.borderRadius = '15px';
-            messageDiv.style.maxWidth = '80%';
-            
-            if (sender === 'user') {
-                messageDiv.style.marginLeft = 'auto';
-                messageDiv.style.background = '#3498db';
-                messageDiv.style.color = 'white';
-            } else {
-                messageDiv.style.background = '#f0f0f0';
-                messageDiv.style.color = 'black';
-            }
-            
+            messageDiv.className = `chat-message ${sender}-message`;
             messageDiv.textContent = text;
             messages.appendChild(messageDiv);
             messages.scrollTop = messages.scrollHeight;
         }
 
-        function processWithGemini(message) {
-            // This is where you would integrate with the Gemini API
-            // For now, we'll simulate a response
-            const responses = {
-                "hello": "Hi! How can I help you with your studies today?",
-                "help": "I can help you with any subject-related questions. Just ask!",
-                default: "I understand your question about '" + message + "'. Let me help you with that. What specific aspect would you like to know more about?"
-            };
-
-            const response = responses[message.toLowerCase()] || responses.default;
-            addMessage('bot', response);
+        function showTypingIndicator() {
+            const messages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.textContent = 'Thinking...';
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
         }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Initialize chatbot with welcome message
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.getElementById('chatMessages');
+            if (messages.children.length === 0) {
+                addMessage('bot', 'Hi! I\'m your study assistant. How can I help you with your studies today?');
+            }
+        });
     </script>
 </body>
 </html>
