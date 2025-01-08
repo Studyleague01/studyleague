@@ -6,6 +6,41 @@
     <title>Chapter Details - Study Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Custom CSS for notes section */
+        #notes h2 {
+            color: #2563eb;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 8px;
+        }
+
+        #notes h3 {
+            color: #1e40af;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 16px 0;
+            padding-left: 10px;
+            border-left: 4px solid #2563eb;
+        }
+
+        #notes p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #374151;
+            margin: 12px 0;
+            text-align: justify;
+            padding: 0 10px;
+        }
+
+        #notes b {
+            color: #1e40af;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <!-- Navigation -->
@@ -33,8 +68,8 @@
     <!-- Chapter Header -->
     <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-8">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl md:text-4xl font-bold mb-2">Chapter 1: [Chapter Name]</h1>
-            <p class="text-lg">[Subject Name]</p>
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Chapter 1: Introduction to Accounting</h1>
+            <p class="text-lg">Accounts</p>
         </div>
     </div>
 
@@ -63,24 +98,47 @@
             </div>
         </div>
 
-        <!-- Chapter Notes -->
+        <!-- Notes Section with Custom Styled Elements -->
         <div id="notes" class="bg-white rounded-lg shadow-lg p-6 mb-8">
-            <h2 class="text-2xl font-bold mb-4 text-blue-600">Chapter Notes</h2>
-            <div class="prose max-w-none">
-                <!-- Add your chapter notes content here -->
-                <h3 class="text-xl font-semibold mb-3">Key Points:</h3>
-                <div class="space-y-4">
-                    <p>Your chapter notes content goes here...</p>
-                    <!-- Add more notes sections as needed -->
-                </div>
-            </div>
+            <h2>Introduction to Accounting</h2>
+            
+            <h3>Accounting</h3>
+            <p>Accounting is the science of efficiently documenting, categorising, and summarising monetary transactions and evaluating the findings efficiently.</p>
+            
+            <h3>Functions of Accounting</h3>
+            <p>1. <b>Identifying:</b> The initial stage in accounting is to identify company transactions from multiple sources. It entails keeping track of all company activities and determining the deemed financial transactions.</p>
+            <p>2. <b>Recording:</b> Only monetary transactions are documented in ledgers. It entails maintaining a precise record of them and recording them in a diary.</p>
+            <p>3. <b>Classifying:</b> The transactions are categorised after being recorded. The term “classification” refers to all similar transactions in one location.</p>
+            <p>4. <b>Summarising:</b> Trial balance is the process of bringing all account balances together in one place.</p>
+            <p>5. <b>Communicating:</b> Accounting also entails communicating financial data such as financial statements to users, such as financial statements, who analyse them according to their needs.</p>
+            
+            <h3>Accounting’s Objectives</h3>
+            <p>• Maintain accurate records of company transactions by established procedures to reduce the risk of omission and fraud.</p>
+            <p>• Determine the net profit or loss resulting from the company’s transactions during a specific period and the causes for profit or loss.</p>
+            <p>• Accounting information, such as a balance sheet is used to assess a company’s financial condition.</p>
+            <p>• Determine business progress from year to year and detect errors and frauds.</p>
+            <p>• To give accounting information to various interested parties, including owners, creditors, banks, and workers, who conduct in-depth analyses based on the stakeholders’ needs.</p>
+            
+            <h3>Accounting’s Benefits</h3>
+            <p>• Accounting keeps track of all corporate transactions and gives accurate data to stakeholders.</p>
+            <p>• Accounting shows a company’s profit and loss over a specific period.</p>
+            <p>• Accounting allows for a comparison of many aspects of a firm, such as profit, sales, and purchases, with past years and assists in making decisions.</p>
+            <p>• Accounting is used to evaluate and enhance the performance of personnel, divisions, activities, and other entities.</p>
+            <p>• Accounting records are accepted as evidence in court proceedings.</p>
+
+            <h3>Accounting’s Limitations</h3>
+            <p>• Accounting has many flaws, one of which is that it primarily considers monetary transactions. Accounting ignores non-monetary factors such as quality, honesty, and abilities.</p>
+            <p>• It solely evaluates previous transactions. Therefore the figures in the financial statement do not account for changes in price levels.</p>
+            <p>• Personal judgments impact it, and it is not free of personal prejudice, which lowers its trustworthiness.</p>
+            <p>• It is influenced by window dressing, which is the manipulation of accounting to make financial statements appear more favourable than they are.</p>
+            <p>• Because financial statements are merely records of past occurrences, they are inappropriate for predicting.</p>    
+        
         </div>
 
         <!-- Video Lectures -->
         <div id="videos" class="bg-white rounded-lg shadow-lg p-6 mb-8">
             <h2 class="text-2xl font-bold mb-4 text-blue-600">Video Lectures</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Video 1 -->
                 <div class="aspect-w-16 aspect-h-9">
                     <iframe class="w-full h-64"
                         src="https://www.youtube.com/embed/VIDEO_ID_1"
@@ -88,8 +146,8 @@
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
+                    <p class="mt-2"><b>Lecture 1:</b> Basic Principles of Accounting</p>
                 </div>
-                <!-- Video 2 -->
                 <div class="aspect-w-16 aspect-h-9">
                     <iframe class="w-full h-64"
                         src="https://www.youtube.com/embed/VIDEO_ID_2"
@@ -97,6 +155,7 @@
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
+                    <p class="mt-2"><b>Lecture 2:</b> Recording Financial Transactions</p>
                 </div>
             </div>
         </div>
@@ -119,7 +178,6 @@
         <div id="practice" class="bg-white rounded-lg shadow-lg p-6">
             <h2 class="text-2xl font-bold mb-4 text-blue-600">Practice Material</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Previous Year Questions -->
                 <div class="border rounded-lg p-4">
                     <h3 class="text-xl font-semibold mb-3">Previous Year Questions</h3>
                     <ul class="space-y-2">
@@ -128,7 +186,6 @@
                         <li><a href="#" class="text-blue-600 hover:underline">2022 Board Exam Questions</a></li>
                     </ul>
                 </div>
-                <!-- Sample Papers -->
                 <div class="border rounded-lg p-4">
                     <h3 class="text-xl font-semibold mb-3">Sample Papers</h3>
                     <ul class="space-y-2">
