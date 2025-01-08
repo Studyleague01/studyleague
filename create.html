@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Content Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-blue-600 mb-6">Chapter Content Generator</h1>
+        
+        <!-- Basic Info -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Chapter Information</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block mb-2">Chapter Number & Name:</label>
+                    <input type="text" id="chapterTitle" placeholder="e.g., Chapter 1: Introduction" 
+                           class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block mb-2">Subject:</label>
+                    <input type="text" id="subject" placeholder="e.g., Physics" 
+                           class="w-full p-2 border rounded">
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Chapter Notes</h2>
+            <p class="text-gray-600 mb-4">Formatting Guide:
+                <br>- Leave blank lines between paragraphs for spacing
+                <br>- Use ** for bold text (e.g., **important text**)
+                <br>- Start a line with # for main heading
+                <br>- Start a line with ## for subheading
+            </p>
+            <textarea 
+                id="notesInput" 
+                class="w-full h-64 p-4 border rounded-lg mb-4" 
+                placeholder="Enter your notes here..."
+            ></textarea>
+        </div>
+
+        <!-- Video Lectures -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Video Lectures</h2>
+            <div id="videoInputs" class="space-y-4">
+                <div class="flex gap-4">
+                    <input type="text" placeholder="YouTube Video URL 1" 
+                           class="flex-1 p-2 border rounded">
+                    <input type="text" placeholder="Video Title 1" 
+                           class="flex-1 p-2 border rounded">
+                </div>
+                <div class="flex gap-4">
+                    <input type="text" placeholder="YouTube Video URL 2" 
+                           class="flex-1 p-2 border rounded">
+                    <input type="text" placeholder="Video Title 2" 
+                           class="flex-1 p-2 border rounded">
+                </div>
+            </div>
+            <button onclick="addVideoInput()" 
+                    class="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                Add More Videos
+            </button>
+        </div>
+
+        <!-- Textbook Links -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Textbook PDFs</h2>
+            <div id="pdfInputs" class="space-y-4">
+                <div class="flex gap-4">
+                    <input type="text" placeholder="PDF URL" 
+                           class="flex-1 p-2 border rounded">
+                    <input type="text" placeholder="PDF Title" 
+                           class="flex-1 p-2 border rounded">
+                </div>
+            </div>
+            <button onclick="addPDFInput()" 
+                    class="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                Add More PDFs
+            </button>
+        </div>
+
+        <!-- Practice Materials -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Practice Materials</h2>
+            <div class="space-y-6">
+                <!-- Previous Year Questions -->
+                <div>
+                    <h3 class="font-bold mb-2">Previous Year Questions</h3>
+                    <div id="pyqInputs" class="space-y-4">
+                        <div class="flex gap-4">
+                            <input type="text" placeholder="PYQ URL" 
+                                   class="flex-1 p-2 border rounded">
+                            <input type="text" placeholder="Year/Description" 
+                                   class="flex-1 p-2 border rounded">
+                        </div>
+                    </div>
+                    <button onclick="addPYQInput()" 
+                            class="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                        Add More PYQs
+                    </button>
+                </div>
+                
+                <!-- Sample Papers -->
+                <div>
+                    <h3 class="font-bold mb-2">Sample Papers</h3>
+                    <div id="samplePaperInputs" class="space-y-4">
+                        <div class="flex gap-4">
+                            <input type="text" placeholder="Sample Paper URL" 
+                                   class="flex-1 p-2 border rounded">
+                            <input type="text" placeholder="Description" 
+                                   class="flex-1 p-2 border rounded">
+                        </div>
+                    </div>
+                    <button onclick="addSamplePaperInput()" 
+                            class="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                        Add More Sample Papers
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="text-center mb-8">
+            <button onclick="generateHTML()" 
+                    class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 text-lg">
+                Generate HTML
+            </button>
+        </div>
+
+        <!-- HTML Output -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-4">Generated HTML</h2>
+            <div class="relative">
+                <button onclick="copyHTML()" 
+                        class="absolute top-2 right-2 bg-blue-600 text-white px-4 py-1 rounded text-sm">
+                    Copy
+                </button>
+                <pre id="htmlOutput" class="bg-gray-50 p-4 rounded-lg overflow-x-auto"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addVideoInput() {
+            const container = document.getElementById('videoInputs');
+            const newInput = document.createElement('div');
+            newInput.className = 'flex gap-4';
+            newInput.innerHTML = `
+                <input type="text" placeholder="YouTube Video URL" class="flex-1 p-2 border rounded">
+                <input type="text" placeholder="Video Title" class="flex-1 p-2 border rounded">
+            `;
+            container.appendChild(newInput);
+        }
+
+        function addPDFInput() {
+            const container = document.getElementById('pdfInputs');
+            const newInput = document.createElement('div');
+            newInput.className = 'flex gap-4';
+            newInput.innerHTML = `
+                <input type="text" placeholder="PDF URL" class="flex-1 p-2 border rounded">
+                <input type="text" placeholder="PDF Title" class="flex-1 p-2 border rounded">
+            `;
+            container.appendChild(newInput);
+        }
+
+        function addPYQInput() {
+            const container = document.getElementById('pyqInputs');
+            const newInput = document.createElement('div');
+            newInput.className = 'flex gap-4';
+            newInput.innerHTML = `
+                <input type="text" placeholder="PYQ URL" class="flex-1 p-2 border rounded">
+                <input type="text" placeholder="Year/Description" class="flex-1 p-2 border rounded">
+            `;
+            container.appendChild(newInput);
+        }
+
+        function addSamplePaperInput() {
+            const container = document.getElementById('samplePaperInputs');
+            const newInput = document.createElement('div');
+            newInput.className = 'flex gap-4';
+            newInput.innerHTML = `
+                <input type="text" placeholder="Sample Paper URL" class="flex-1 p-2 border rounded">
+                <input type="text" placeholder="Description" class="flex-1 p-2 border rounded">
+            `;
+            container.appendChild(newInput);
+        }
+
+        function processNotes(text) {
+            let lines = text.split('\n');
+            let html = '';
+            let currentParagraph = '';
+            let inParagraph = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                
+                // Process bold text
+                line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+                if (line.startsWith('# ')) {
+                    if (inParagraph) {
+                        html += `        <p>${currentParagraph}</p>\n\n`;
+                        currentParagraph = '';
+                        inParagraph = false;
+                    }
+                    html += `        <h2 class="text-2xl font-semibold mb-3">${line.substring(2)}</h2>\n\n`;
+                    continue;
+                }
+                
+                if (line.startsWith('## ')) {
+                    if (inParagraph) {
+                        html += `        <p>${currentParagraph}</p>\n\n`;
+                        currentParagraph = '';
+                        inParagraph = false;
+                    }
+                    html += `        <h3 class="text-xl font-semibold mb-3">${line.substring(3)}</h3>\n\n`;
+                    continue;
+                }
+
+                if (line === '') {
+                    if (inParagraph) {
+                        html += `        <p>${currentParagraph}</p>\n\n`;
+                        currentParagraph = '';
+                        inParagraph = false;
+                    }
+                    continue;
+                }
+
+                if (!inParagraph) {
+                    inParagraph = true;
+                    currentParagraph = line;
+                } else {
+                    currentParagraph += ' ' + line;
+                }
+            }
+
+            if (inParagraph) {
+                html += `        <p>${currentParagraph}</p>\n\n`;
+            }
+
+            return html;
+        }
+
+        function extractVideoId(url) {
+            const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : url;
+        }
+
+        function generateHTML() {
+            const chapterTitle = document.getElementById('chapterTitle').value;
+            const subject = document.getElementById('subject').value;
+            const notes = document.getElementById('notesInput').value;
+
+            let html = `<!-- Chapter Content Start -->
+<div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">${chapterTitle}</h1>
+        <p class="text-lg">${subject}</p>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Notes Section -->
+    <div id="notes" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-blue-600">Chapter Notes</h2>
+        <div class="prose max-w-none space-y-4">
+${processNotes(notes)}
+        </div>
+    </div>
+
+    <!-- Video Lectures -->
+    <div id="videos" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-blue-600">Video Lectures</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+`;
+
+            // Add videos
+            const videoInputs = document.querySelectorAll('#videoInputs .flex');
+            videoInputs.forEach(input => {
+                const url = input.children[0].value;
+                const title = input.children[1].value;
+                if (url && title) {
+                    const videoId = extractVideoId(url);
+                    html += `            <div class="aspect-w-16 aspect-h-9">
+                <iframe class="w-full h-64"
+                    src="https://www.youtube.com/embed/${videoId}"
+                    title="${title}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>\n`;
+                }
+            });
+
+            html += `        </div>
+    </div>
+
+    <!-- PDF Downloads -->
+    <div id="textbook" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-4 text-blue-600">Study Materials</h2>
+        <div class="space-y-4">
+`;
+
+            // Add PDFs
+            const pdfInputs = document.querySelectorAll('#pdfInputs .flex');
+            pdfInputs.forEach(input => {
+                const url = input.children[0].value;
+                const title = input.children[1].value;
+                if (url && title) {
+                    html += `            <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                <div>
+                    <h3 class="font-semibold">${title}</h3>
+                </div>
+                <a href="${url}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <i class="fas fa-download mr-2"></i>Download
+                </a>
+            </div>\n`;
+                }
+            });
+
+            html += `        </div>
+    </div>
+
+    <!-- Practice Material -->
+    <div id="practice" class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold mb-4 text-blue-600">Practice Material</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Previous Year Questions -->
+            <div class="border rounded-lg p-4">
+                <h3 class="text-xl font-semibold mb-3">Previous Year Questions</h3>
+                <ul class="space-y-2">
+`;
+
+            // Add PYQs
+            const pyqInputs = document.querySelectorAll('#pyqInputs .flex');
+            pyqInputs.forEach(input => {
+                const url = input.children[0].value;
+                const description = input.children[1].value;
+                if (url && description) {
+                    html += `                    <li><a href="${url}" class="text-blue-600 hover:underline">${description}</a></li>\n`;
+                }
+            });
+
+            html += `                </ul>
+            </div>
+            <!-- Sample Papers -->
+            <div class="border rounded-lg p-4">
+                <h3 class="text-xl font-semibold mb-3">Sample Papers</h3>
+                <ul class="space-y-2">
+`;
+
+            // Add Sample Papers
+            const samplePaperInputs = document.querySelectorAll('#samplePaperInputs .flex');
+            samplePaperInputs.forEach(input => {
+                const url = input.children[0].value;
+                const description = input.children[1].value;
+                if (url && description) {
+                    html += `                    <li><a href="${url}" class="text-blue-600 hover:underline">${description}</a></li>\n`;
+                }
+            });
+
+            html += `                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Chapter Content End -->`;
+
+            // Display the generated HTML
+            document.getElementById('htmlOutput').textContent = html;
+        }
+
+        function copyHTML() {
+            const htmlContent = document.getElementById('htmlOutput').textContent;
+            navigator.clipboard.writeText(htmlContent).then(() => {
+                alert('HTML copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
