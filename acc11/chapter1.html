@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Details - Study Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Study Hub</h1>
+            <div class="hidden md:flex space-x-4">
+                <a href="index.html" class="block py-2">Home</a>
+                <a href="https://scoderportfolio.netlify.app" class="block py-2">About</a>
+                <a href="https://shcloud.netlify.app/cont" class="block py-2">Contact</a>
+            </div>
+            <button class="md:hidden" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-blue-500 text-white p-4">
+        <a href="index.html" class="block py-2">Home</a>
+        <a href="https://scoderportfolio.netlify.app" class="block py-2">About</a>
+        <a href="https://shcloud.netlify.app/cont" class="block py-2">Contact</a>
+    </div>
+
+    <!-- Chapter Header -->
+    <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Chapter 1: [Chapter Name]</h1>
+            <p class="text-lg">[Subject Name]</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Quick Links -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Quick Access</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="#notes" class="bg-blue-50 p-4 rounded-lg text-center hover:bg-blue-100">
+                    <i class="fas fa-book-open text-2xl mb-2 text-blue-600"></i>
+                    <p class="font-semibold">Chapter Notes</p>
+                </a>
+                <a href="#videos" class="bg-blue-50 p-4 rounded-lg text-center hover:bg-blue-100">
+                    <i class="fas fa-play-circle text-2xl mb-2 text-blue-600"></i>
+                    <p class="font-semibold">Video Lectures</p>
+                </a>
+                <a href="#textbook" class="bg-blue-50 p-4 rounded-lg text-center hover:bg-blue-100">
+                    <i class="fas fa-file-pdf text-2xl mb-2 text-blue-600"></i>
+                    <p class="font-semibold">NCERT Textbook</p>
+                </a>
+                <a href="#practice" class="bg-blue-50 p-4 rounded-lg text-center hover:bg-blue-100">
+                    <i class="fas fa-pencil-alt text-2xl mb-2 text-blue-600"></i>
+                    <p class="font-semibold">Practice Questions</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Chapter Notes -->
+        <div id="notes" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Chapter Notes</h2>
+            <div class="prose max-w-none">
+                <!-- Add your chapter notes content here -->
+                <h3 class="text-xl font-semibold mb-3">Key Points:</h3>
+                <div class="space-y-4">
+                    <p>Your chapter notes content goes here...</p>
+                    <!-- Add more notes sections as needed -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Lectures -->
+        <div id="videos" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Video Lectures</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Video 1 -->
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="w-full h-64"
+                        src="https://www.youtube.com/embed/VIDEO_ID_1"
+                        title="Video Lecture 1"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+                <!-- Video 2 -->
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe class="w-full h-64"
+                        src="https://www.youtube.com/embed/VIDEO_ID_2"
+                        title="Video Lecture 2"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- NCERT Textbook -->
+        <div id="textbook" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">NCERT Textbook</h2>
+            <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                <div>
+                    <h3 class="font-semibold">Download Chapter PDF</h3>
+                    <p class="text-sm text-gray-600">Size: 2.5 MB</p>
+                </div>
+                <a href="/path/to/chapter.pdf" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <i class="fas fa-download mr-2"></i>Download
+                </a>
+            </div>
+        </div>
+
+        <!-- Practice Material -->
+        <div id="practice" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Practice Material</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Previous Year Questions -->
+                <div class="border rounded-lg p-4">
+                    <h3 class="text-xl font-semibold mb-3">Previous Year Questions</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-600 hover:underline">2024 Board Exam Questions</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">2023 Board Exam Questions</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">2022 Board Exam Questions</a></li>
+                    </ul>
+                </div>
+                <!-- Sample Papers -->
+                <div class="border rounded-lg p-4">
+                    <h3 class="text-xl font-semibold mb-3">Sample Papers</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-600 hover:underline">Sample Paper Set 1</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">Sample Paper Set 2</a></li>
+                        <li><a href="#" class="text-blue-600 hover:underline">Sample Paper Set 3</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
